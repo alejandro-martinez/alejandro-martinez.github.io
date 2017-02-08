@@ -1,0 +1,9 @@
+.full-container {
+	width: 100% !important;
+	padding: 0;
+}
+.full-screen {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
