@@ -31,3 +31,7 @@ footer {
 	background: #515151;
 	color:#fff;
 }
+footer .center-block a {
+	margin-left: 10px;
+	color: #fff;
+} 
