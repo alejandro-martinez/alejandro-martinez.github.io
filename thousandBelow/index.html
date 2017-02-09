@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Thousand Below</title>
+  <meta name="description" content="">
+  <meta name="author" content="Alejandro Martinez">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container-fluid">
+    <!--
+    ********************************************************************
+    * Responsive Transparent Navbar
+    ********************************************************************
+    -->
+    <div class="navbar navbar-inverse navbar-fixed-top opaque-navbar">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navMain">
+      <span class="glyphicon glyphicon-chevron-right" style="color:white;"></span>
+        
+      </button>
+          <a class="navbar-brand" href="#">
+            <img src="img/logo.svg" height="90" alt="Thousand Below"/>
+            <small>THOUSAND BELOW</small>
+          </a>
+        </div>
+        <div class="collapse navbar-collapse" id="navMain">
+          <ul class="nav navbar-nav pull-right">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="https://www.youtube.com/channel/UCjEPx53Tta1MalgxhQHh8tA">YOUTUBE</a></li>
+            <li><a href="https://www.instagram.com/thousandbelow/">INSTAGRAM</a></li> 
+            <li><a href="https://www.facebook.com/Thousandbelow/">FACEBOOK</a></li> 
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 text-center">
+
+          <div class="jumbotron">
+            <h1>NEW SINGLE</h1> 
+            <p>Get the brand new single "Tradition" on iTunes
+                <a href="http://smarturl.it/thousand-below">now</a>!
+            </p> 
+          </div>
+          <div class="video center-block">
+            <iframe width="100%" height="360" src="https://www.youtube.com/embed/O9jKFjo3W_0" frameborder="0" allowfullscreen></iframe>
+          </div>
+        </div>  
+
+      </div>
+    
+  </div>  
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+     /*
+  **********************************************************
+  * OPAQUE NAVBAR SCRIPT
+  **********************************************************
+  */
+
+  // Toggle tranparent navbar when the user scrolls the page
+
+    $(window).scroll(function() {
+        if($(this).scrollTop() > 50)  /*height in pixels when the navbar becomes non opaque*/ 
+        {
+            $('.opaque-navbar').addClass('opaque');
+        } else {
+            $('.opaque-navbar').removeClass('opaque');
+        }
+    });
+  </script>
+</body>
+</html>
