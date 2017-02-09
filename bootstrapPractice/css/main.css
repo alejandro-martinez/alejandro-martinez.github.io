@@ -1,3 +1,6 @@
+body {
+	font-family: 'Oswald', sans-serif;
+}
 .full-container {
 	width: 100% !important;
 	padding: 0;
@@ -11,10 +14,10 @@
 	margin-bottom: 0px !important;
     border-radius: 0;
 }
-#mycarousel {
-	margin-bottom: 40px;
+.services {
+	margin: 60px 0;	
 }
 .services img {
-	margin:0 auto;
+	margin: 0 auto;
 	max-width: 300px;
 }
