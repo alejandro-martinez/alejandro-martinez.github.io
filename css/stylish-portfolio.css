@@ -33,6 +33,9 @@ body {
     color: #fff;
     margin-left: 10px;
 }
+footer .center-block a {
+    margin-left: 10px;
+}
 /* Custom Button Styles */
 
 .btn-dark {
