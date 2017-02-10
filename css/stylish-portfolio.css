@@ -251,3 +251,10 @@ footer {
 .dropdown-menu a:hover{
     color: #000 !important;
 }
+
+
+@media only screen and (max-width: 768px) {
+    .jumbotron {
+        margin-top:56px;
+    }
+}
