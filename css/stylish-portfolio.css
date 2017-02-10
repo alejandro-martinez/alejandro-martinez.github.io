@@ -15,7 +15,9 @@ body {
 body {
     font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
-
+a {
+    text-decoration: none !important;
+}
 .text-vertical-center {
     display: table-cell;
     text-align: center;
@@ -231,4 +233,7 @@ footer {
 
 .jumbotron {
     background: rgba(0,0,0,.3);
+}
+.jumbotron .center-block a i:hover{
+    color: rgba(0, 0, 0, .5);
 }
