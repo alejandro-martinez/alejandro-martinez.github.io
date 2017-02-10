@@ -113,8 +113,10 @@ small span:last-child{
 @media (max-width: 599px) {
   .navbar-brand > span:last-child {
     display:inline-block;
-    margin:4px;
-    
+    margin:4px; 
+  }
+  .navbar ul {
+    padding-top:0;
   }
   .navbar-brand img {
     height: 40px;
@@ -134,4 +136,10 @@ small span:last-child{
     height: 60px;
     transition: background-color .5s ease 0s;
   }
+
+  body > .container-fluid .container .row {
+    padding-top: 42px;
+  }
+
+
 }
