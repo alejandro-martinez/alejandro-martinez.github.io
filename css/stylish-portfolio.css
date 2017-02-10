@@ -136,11 +136,15 @@ hr.small {
     background: none;
 }
 
-#menu-toggle {
+#menu-toggle, .dropdown {
     z-index: 1;
     position: fixed;
     top: 0;
     right: 0;
+}
+
+.dropdown {
+    right: 80px;
 }
 
 #sidebar-wrapper.active {
@@ -236,4 +240,14 @@ footer {
 }
 .jumbotron .center-block a i:hover{
     color: rgba(0, 0, 0, .5);
+}
+
+.dropdown-menu {
+    min-width: 106px !important;
+}
+.dropdown-menu a{
+    color: #fff !important;
+}
+.dropdown-menu a:hover{
+    color: #000 !important;
 }

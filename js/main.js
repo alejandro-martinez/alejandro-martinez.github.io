@@ -48,3 +48,16 @@ $(document).scroll(function() {
         }
     }
 });
+
+$(document).ready(function() {    
+    var i18n = window.domI18n({
+      selector: '[data-translate]',
+      separator: ' // ',
+      languages: ['es', 'en'],
+      defaultLanguage: 'es'
+    });
+
+    $('.changeLanguage').click(function(ev) {
+        i18n.changeLanguage( ev.target.innerText.toLowerCase() );
+    });
+})

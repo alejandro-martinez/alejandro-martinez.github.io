@@ -32,7 +32,19 @@
 
 <body>
 
-    <!-- Navigation -->
+    <!-- Language dropdown -->
+    <div class="dropdown">
+      <button class="btn btn-dark btn-lg toggle dropdown-toggle" 
+                type="button" data-toggle="dropdown">
+                <span data-translate>Idioma // Language</span>
+      <span class="caret"></span></button>
+      <ul class="dropdown-menu pull-right btn-dark">
+        <li><a class="changeLanguage" href="javascript:void(0)">ES</a></li>
+        <li><a class="changeLanguage" href="javascript:void(0)">EN</a></li>
+      </ul>
+    </div>
+
+    <!-- Navigation-->
     <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
     <nav id="sidebar-wrapper">
         <ul class="sidebar-nav">
@@ -41,10 +53,10 @@
                 <a href="#top" onclick=$("#menu-close").click();>Alejandro Martinez</a>
             </li>
             <li>
-                <a href="#portfolio" onclick=$("#menu-close").click();>Portfolio</a>
+                <a data-translate href="#portfolio" onclick=$("#menu-close").click();>Porfolio // Portfolio</a>
             </li>
             <li>
-                <a href="mailto:alejandromartinezap@gmail.com" onclick=$("#menu-close").click();>Contacto</a>
+                <a data-translate href="mailto:alejandromartinezap@gmail.com" onclick=$("#menu-close").click();>Contacto // Contact</a>
             </li>
         </ul>
     </nav>
@@ -55,7 +67,8 @@
 
             <div class="jumbotron">
                 <h1>Alejandro Martinez</h1>
-                <h3>Desarrollador fullstack</h3>
+                <h3 data-translate> Desarrollador fullstack // Fullstack Developer
+                </h3>
                 
                 <hr />
 
@@ -85,7 +98,7 @@
             <hr />
 
 
-            <a href="#portfolio" class="btn btn-dark btn-lg">Portfolio</a>
+            <a href="#portfolio" data-translate class="btn btn-dark btn-lg">Porfolio // Portfolio</a>
 
         </div>
     </header>
@@ -162,8 +175,12 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
 
+    <!-- Internationalization --> 
+    <script type="text/javascript" src="js/dom-i18n/dist/dom-i18n.min.js"></script>
+
     <!-- Custom Theme JavaScript -->
     <script type="text/javascript" src="js/main.js"></script>
+    
 </body>
 
 </html>

@@ -32,7 +32,19 @@
 
 <body>
 
-    <!-- Navigation -->
+     <!-- Language dropdown -->
+    <div class="dropdown">
+      <button class="btn btn-dark btn-lg toggle dropdown-toggle" 
+                type="button" data-toggle="dropdown">
+                <span data-translate>Idioma // Language</span>
+      <span class="caret"></span></button>
+      <ul class="dropdown-menu pull-right btn-dark">
+        <li><a class="changeLanguage" href="javascript:void(0)">ES</a></li>
+        <li><a class="changeLanguage" href="javascript:void(0)">EN</a></li>
+      </ul>
+    </div>
+
+    <!-- Navigation-->
     <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
     <nav id="sidebar-wrapper">
         <ul class="sidebar-nav">
@@ -41,10 +53,10 @@
                 <a href="#top" onclick=$("#menu-close").click();>Alejandro Martinez</a>
             </li>
             <li>
-                <a href="/#portfolio" onclick=$("#menu-close").click();>Portfolio</a>
+                <a data-translate href="/#portfolio" data-translate onclick=$("#menu-close").click();>Porfolio // Portfolio</a>
             </li>
             <li>
-                <a href="mailto:alejandromartinezap@gmail.com" onclick=$("#menu-close").click();>Contacto</a>
+                <a data-translate href="mailto:alejandromartinezap@gmail.com" onclick=$("#menu-close").click();>Contacto // Contact</a>
             </li>
         </ul>
     </nav>
@@ -54,7 +66,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">Arduinode
-                    <small>Mobile / web app</small>
+                    <small data-translate>Aplicación multiplataforma // Multiplatform web app</small>
                 </h1>
             </div>
         </div>
@@ -69,13 +81,13 @@
 
             <div class="col-md-4">
                 <h3>Arduinode</h3>
-                <p>Aplicación web para el control de distintos dispositivos de un hogar (Luces, persianas, sistemas de riego). Hecho en React, NodeJS y Socket.IO</p>
-                <h3>Detalles</h3>
+                <p data-translate>Aplicación web para el control de distintos dispositivos de un hogar (Luces, persianas, sistemas de riego). Hecho en React, NodeJS y Socket.IO // Arduinode is a home automation system. It lets you switch the lights of the house, control the windows and the irrigation system. Also, it can schedule operations to automate some tasks. Built on top of Node.JS, Socket.IO, React.JS and Arduino</p>
+                <h3 data-translate>Detalles // Details</h3>
                 <ul>
-                    <li>Control de luces, persianas, sistemas de riego.</li>
-                    <li>Tareas programadas</li>
-                    <li>Temporización de dispositivos</li>
-                    <li>Control por comandos de voz</li>
+                    <li data-translate>Control de luces, persianas, sistemas de riego. // Lights, windows and irrigation system control.</li>
+                    <li data-translate>Tareas programadas // Scheduled tasks</li>
+                    <li data-translate>Temporización de dispositivos // Timer actions </li>
+                    <li data-translate>Control por comandos de voz // Control over voice commands</li>
                     <li><a href="https://devpost.com/software/arduinode">Video</a></li>
                 </ul>
             </div>
@@ -118,59 +130,11 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
 
+     <!-- Internationalization --> 
+    <script type="text/javascript" src="js/dom-i18n/dist/dom-i18n.min.js"></script>
+
     <!-- Custom Theme JavaScript -->
-    <script>
-    // Closes the sidebar menu
-    $("#menu-close").click(function(e) {
-        e.preventDefault();
-        $("#sidebar-wrapper").toggleClass("active");
-    });
-    // Opens the sidebar menu
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#sidebar-wrapper").toggleClass("active");
-    });
-    // Scrolls to the selected menu item on the page
-    $(function() {
-        $('a[href*=#]:not([href=#],[data-toggle],[data-target],[data-slide])').click(function() {
-            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
-                var target = $(this.hash);
-                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-                if (target.length) {
-                    $('html,body').animate({
-                        scrollTop: target.offset().top
-                    }, 1000);
-                    return false;
-                }
-            }
-        });
-    });
-    //#to-top button appears after scrolling
-    var fixed = false;
-    $(document).scroll(function() {
-        if ($(this).scrollTop() > 250) {
-            if (!fixed) {
-                fixed = true;
-                // $('#to-top').css({position:'fixed', display:'block'});
-                $('#to-top').show("slow", function() {
-                    $('#to-top').css({
-                        position: 'fixed',
-                        display: 'block'
-                    });
-                });
-            }
-        } else {
-            if (fixed) {
-                fixed = false;
-                $('#to-top').hide("slow", function() {
-                    $('#to-top').css({
-                        display: 'none'
-                    });
-                });
-            }
-        }
-    });
-    </script>
+    <script type="text/javascript" src="js/main.js"></script>
 
 </body>
 
