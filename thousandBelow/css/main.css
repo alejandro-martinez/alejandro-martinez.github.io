@@ -103,21 +103,22 @@ small span:last-child{
 }
 
 @media (max-width: 599px) {
-  .navbar-brand img {
-    height: 40px;
-    float: left;
-    margin-top: -7px;
-  }
-  .navbar-brand small{
-    font-size: .8em;
-    float: left;
-  }
-}
-
-@media (max-width: 992px) {
-  .opaque-navbar {
-    background-color: black;
-    height: 60px;
-    transition: background-color .5s ease 0s;
-  }
+	.navbar-brand img {
+		height: 40px;
+		float: left;
+		margin-top: -7px;
+	}
+	.navbar-brand small{
+		font-size: .8em;
+		float: left;
+	}
+	.navbar-collapse ul{
+		margin-right:0px;
+		background: #000;
+	}
+	.opaque-navbar {
+		background: black;
+		height: 60px;
+		transition: background-color .5s ease 0s;
+	}
 }
