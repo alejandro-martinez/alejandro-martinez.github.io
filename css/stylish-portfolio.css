@@ -174,17 +174,6 @@ hr.small {
 .about {
     padding: 50px 0;
 }
-
-/* Services */
-
-.services {
-    padding: 50px 0;
-}
-
-.service-item {
-    margin-bottom: 30px;
-}
-
 /* Callout */
 
 .callout {
@@ -238,4 +227,8 @@ footer {
   position: fixed;
   bottom: 5px;
   right: 5px;
+}
+
+.jumbotron {
+    background: rgba(0,0,0,.3);
 }
