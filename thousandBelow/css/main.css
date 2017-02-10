@@ -30,7 +30,7 @@ ul.dropdown-menu {
 }
 
 body > .container-fluid .container .row {
-  padding-top: 90px;
+  padding-top: 80px;
 }
 .jumbotron {
   background: none;
@@ -48,9 +48,17 @@ body > .container-fluid .container .row {
 .navbar ul{
   padding-top: 1em;
 }
-.navbar a{
+.navbar a {
+  font-size: .89em;
   text-transform: uppercase;
 }
+.navbar-brand {
+  text-align: center;
+}
+.navbar-brand > span:last-child{
+  display:block;
+  font-size:.9em;
+} 
 .navbar-brand img {
   margin:0 auto;
 }
@@ -72,7 +80,7 @@ body > .container-fluid .container .row {
 }
 
 #bodybg {
-  opacity:.023;
+  opacity:.047;
   position:absolute;
   top:-20px;
 }
@@ -103,22 +111,27 @@ small span:last-child{
 }
 
 @media (max-width: 599px) {
-	.navbar-brand img {
-		height: 40px;
-		float: left;
-		margin-top: -7px;
-	}
-	.navbar-brand small{
-		font-size: .8em;
-		float: left;
-	}
-	.navbar-collapse ul{
-		margin-right:0px;
-		background: #000;
-	}
-	.opaque-navbar {
-		background: black;
-		height: 60px;
-		transition: background-color .5s ease 0s;
-	}
+  .navbar-brand > span:last-child {
+    display:inline-block;
+    margin:4px;
+    
+  }
+  .navbar-brand img {
+    height: 40px;
+    float: left;
+    margin-top: -7px;
+  }
+  .navbar-brand small{
+    font-size: .8em;
+    float: left;
+  }
+  .navbar-collapse ul{
+    margin-right:0px;
+    background: #000;
+  }
+  .opaque-navbar {
+    background: black;
+    height: 60px;
+    transition: background-color .5s ease 0s;
+  }
 }
