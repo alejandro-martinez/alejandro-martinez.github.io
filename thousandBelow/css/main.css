@@ -89,3 +89,21 @@ body > .container-fluid .container .row {
 	position:absolute;
 	top:-20px;
 }
+
+@media (max-width: 480px) {
+  	.navbar-brand img {
+  		height: 40px;
+  	}
+		
+	.navbar-brand small{
+		font-size: .8em;
+	}
+}
+
+
+small span{
+	display:inline-block;
+}
+small span:last-child{
+	margin-left:-5px;
+}
