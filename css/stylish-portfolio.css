@@ -147,6 +147,10 @@ hr.small {
     right: 80px;
 }
 
+.dropdown button.toggle {
+    margin-right: 0 !important;
+}
+
 #sidebar-wrapper.active {
     right: 250px;
     width: 250px;
