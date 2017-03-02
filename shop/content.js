@@ -1,0 +1,1 @@
+module.exports = 'Export content from content.js'
