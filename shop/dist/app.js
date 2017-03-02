@@ -63,12 +63,29 @@
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 119);
+/******/ 	return __webpack_require__(__webpack_require__.s = 118);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 117:
+/***/ 118:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Home_HomeCtrl__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Products_ProductsSvc__ = __webpack_require__(64);
+__webpack_require__(65);
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = angular.module('app', []).controller('HomeCtrl', __WEBPACK_IMPORTED_MODULE_0__Home_HomeCtrl__["a" /* HomeCtrl */]).service('ProductsSvc', __WEBPACK_IMPORTED_MODULE_1__Products_ProductsSvc__["a" /* ProductsSvc */]);
+
+/***/ }),
+
+/***/ 63:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -82,7 +99,7 @@ class HomeCtrl {
 
 /***/ }),
 
-/***/ 118:
+/***/ 64:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -96,39 +113,12 @@ class ProductsSvc {
 		return this._$q.when("Bobby Tables");
 	}
 }
-/* unused harmony export ProductsSvc */
+/* harmony export (immutable) */ __webpack_exports__["a"] = ProductsSvc;
 
 
 /***/ }),
 
-/***/ 119:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_js__ = __webpack_require__(63);
-__webpack_require__(64);
-
-
-/***/ }),
-
-/***/ 63:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Home_HomeCtrl__ = __webpack_require__(117);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Products_ProductsSvc__ = __webpack_require__(118);
-// Entry point angular app
-
-
-
-
-
-angular.module('app', []).controller('HomeCtrl', __WEBPACK_IMPORTED_MODULE_0__Home_HomeCtrl__["a" /* HomeCtrl */]).service('ProductsSvc', __WEBPACK_IMPORTED_MODULE_0__Home_HomeCtrl__["a" /* HomeCtrl */]);
-
-/***/ }),
-
-/***/ 64:
+/***/ 65:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
