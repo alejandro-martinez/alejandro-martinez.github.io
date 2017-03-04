@@ -79,6 +79,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Common_Routes__ = __webpack_require__(66);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Products_ProductsSvc__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Categories_CategoriesSvc__ = __webpack_require__(65);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Products_ProductsDtv__ = __webpack_require__(130);
 __webpack_require__(70);
 
 // Controllers
@@ -91,7 +92,40 @@ __webpack_require__(70);
 
 
 
-/* harmony default export */ __webpack_exports__["default"] = angular.module('app', ['ngRoute']).config(__WEBPACK_IMPORTED_MODULE_3__Common_Routes__["a" /* default */]).controller('HomeCtrl', __WEBPACK_IMPORTED_MODULE_2__Home_HomeCtrl__["a" /* HomeCtrl */]).controller('CategoriesCtrl', __WEBPACK_IMPORTED_MODULE_0__Categories_CategoriesCtrl__["a" /* CategoriesCtrl */]).controller('ProductsCtrl', __WEBPACK_IMPORTED_MODULE_1__Products_ProductsCtrl__["a" /* ProductsCtrl */]).service('ProductsSvc', __WEBPACK_IMPORTED_MODULE_4__Products_ProductsSvc__["a" /* ProductsSvc */]).service('CategoriesSvc', __WEBPACK_IMPORTED_MODULE_5__Categories_CategoriesSvc__["a" /* CategoriesSvc */]);
+//Directives
+
+
+/* harmony default export */ __webpack_exports__["default"] = angular.module('app', ['ngRoute']).config(__WEBPACK_IMPORTED_MODULE_3__Common_Routes__["a" /* default */]).constant("Config", {
+	apiBaseURL: "https://api.mercadolibre.com/",
+	apiURL: "https://api.mercadolibre.com/sites/MLA/"
+}).controller('HomeCtrl', __WEBPACK_IMPORTED_MODULE_2__Home_HomeCtrl__["a" /* HomeCtrl */]).controller('CategoriesCtrl', __WEBPACK_IMPORTED_MODULE_0__Categories_CategoriesCtrl__["a" /* CategoriesCtrl */]).controller('ProductsCtrl', __WEBPACK_IMPORTED_MODULE_1__Products_ProductsCtrl__["a" /* ProductsCtrl */]).service('ProductsSvc', __WEBPACK_IMPORTED_MODULE_4__Products_ProductsSvc__["a" /* ProductsSvc */]).service('CategoriesSvc', __WEBPACK_IMPORTED_MODULE_5__Categories_CategoriesSvc__["a" /* CategoriesSvc */]).directive('productDetail', () => new __WEBPACK_IMPORTED_MODULE_6__Products_ProductsDtv__["a" /* ProductsDtv */]());
+
+/***/ }),
+
+/***/ 130:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class ProductsDtv {
+    constructor() {
+        this.restrict = 'E';
+        this.replace = true;
+        this.templateUrl = '/modules/Products/product_detail.html';
+        this.scope = {};
+    }
+
+    controller($scope, ProductsSvc) {
+        $scope.productsSvc = ProductsSvc;
+    }
+
+    link(scope, element, attrs) {
+        scope.productsSvc.getProductPictures(attrs.itemid).then(product => {
+            scope.image = product.data.pictures[0].secure_url;
+        });
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = ProductsDtv;
+
 
 /***/ }),
 
@@ -123,11 +157,12 @@ CategoriesCtrl.$inject = ['CategoriesSvc', '$routeParams'];
 
 "use strict";
 class CategoriesSvc {
-	constructor($http) {
+	constructor($http, Config) {
 		this.http = $http;
+		this.config = Config;
 	}
 	getAll() {
-		return this.http.get("https://api.mercadolibre.com/sites/MLA/categories");
+		return this.http.get(this.config.apiURL + "categories");
 	}
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = CategoriesSvc;
@@ -159,15 +194,11 @@ function Routes($routeProvider) {
 
 "use strict";
 class HomeCtrl {
-	constructor(ProductsSvc, CategoriesSvc) {
-		this.productsSvc = ProductsSvc;
-	}
+	constructor() {}
 
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = HomeCtrl;
 
-
-HomeCtrl.$inject = ['ProductsSvc', 'CategoriesSvc'];
 
 /***/ }),
 
@@ -198,18 +229,20 @@ ProductsCtrl.$inject = ['ProductsSvc', '$routeParams'];
 
 "use strict";
 class ProductsSvc {
-	constructor($http) {
+	constructor($http, Config) {
 		this.http = $http;
+		this.config = Config;
 	}
 	getByCategory(category_id) {
-		return this.http.get("https://api.mercadolibre.com/sites/MLA/hot_items/search?limit=15&category=" + category_id);
+		var limit = 10;
+		return this.http.get(this.config.apiURL + "hot_items/search?limit=" + limit + "&category=" + category_id);
 	}
-
+	getProductPictures(product_id) {
+		return this.http.get(this.config.apiBaseURL + "items/" + product_id);
+	}
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = ProductsSvc;
 
-
-ProductsSvc.$inject = ['$http'];
 
 /***/ }),
 

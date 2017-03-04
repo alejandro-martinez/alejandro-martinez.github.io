@@ -10,10 +10,18 @@ import Routes from './Common/Routes';
 import { ProductsSvc } from "./Products/ProductsSvc";
 import { CategoriesSvc } from "./Categories/CategoriesSvc";
 
+//Directives
+import { ProductsDtv} from "./Products/ProductsDtv"
+
 export default angular.module('app', ['ngRoute'])
 	.config( Routes )
+	.constant("Config", {
+		apiBaseURL: "https://api.mercadolibre.com/",
+		apiURL: "https://api.mercadolibre.com/sites/MLA/"
+	})
 	.controller('HomeCtrl', HomeCtrl )
 	.controller('CategoriesCtrl', CategoriesCtrl )
 	.controller('ProductsCtrl', ProductsCtrl )
 	.service('ProductsSvc', ProductsSvc )
-	.service('CategoriesSvc', CategoriesSvc );
+	.service('CategoriesSvc', CategoriesSvc )
+	.directive('productDetail', () => new ProductsDtv)

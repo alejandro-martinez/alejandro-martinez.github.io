@@ -1,8 +1,9 @@
 export class CategoriesSvc {
-	constructor( $http ) {
+	constructor( $http, Config ) {
 		this.http = $http;
+		this.config = Config;
 	}
 	getAll() {
-		return this.http.get("https://api.mercadolibre.com/sites/MLA/categories")
+		return this.http.get( this.config.apiURL + "categories")
 	}
 }
