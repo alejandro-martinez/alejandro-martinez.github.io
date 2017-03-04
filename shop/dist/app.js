@@ -75,15 +75,13 @@
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Categories_CategoriesCtrl__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Products_ProductsCtrl__ = __webpack_require__(68);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Home_HomeCtrl__ = __webpack_require__(67);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Common_Routes__ = __webpack_require__(66);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Products_ProductsSvc__ = __webpack_require__(70);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Categories_CategoriesSvc__ = __webpack_require__(65);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Products_ProductsDtv__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Common_Routes__ = __webpack_require__(66);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Products_ProductsSvc__ = __webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Categories_CategoriesSvc__ = __webpack_require__(65);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Products_ProductsDtv__ = __webpack_require__(69);
 __webpack_require__(71);
 
 // Controllers
-
 
 
 
@@ -95,13 +93,13 @@ __webpack_require__(71);
 //Directives
 
 
-/* harmony default export */ __webpack_exports__["default"] = angular.module('app', ['ngRoute']).config(__WEBPACK_IMPORTED_MODULE_3__Common_Routes__["a" /* default */]).constant("Config", function () {
+/* harmony default export */ __webpack_exports__["default"] = angular.module('app', ['ngRoute']).config(__WEBPACK_IMPORTED_MODULE_2__Common_Routes__["a" /* default */]).constant("Config", function () {
 	var baseURL = "https://api.mercadolibre.com/";
 	return {
 		apiBaseURL: baseURL,
 		apiURL: baseURL + "sites/MLA/"
 	};
-}()).controller('HomeCtrl', __WEBPACK_IMPORTED_MODULE_2__Home_HomeCtrl__["a" /* HomeCtrl */]).controller('CategoriesCtrl', __WEBPACK_IMPORTED_MODULE_0__Categories_CategoriesCtrl__["a" /* CategoriesCtrl */]).controller('ProductsCtrl', __WEBPACK_IMPORTED_MODULE_1__Products_ProductsCtrl__["a" /* ProductsCtrl */]).service('ProductsSvc', __WEBPACK_IMPORTED_MODULE_4__Products_ProductsSvc__["a" /* ProductsSvc */]).service('CategoriesSvc', __WEBPACK_IMPORTED_MODULE_5__Categories_CategoriesSvc__["a" /* CategoriesSvc */]).directive('productDetail', () => new __WEBPACK_IMPORTED_MODULE_6__Products_ProductsDtv__["a" /* ProductsDtv */]());
+}()).controller('CategoriesCtrl', __WEBPACK_IMPORTED_MODULE_0__Categories_CategoriesCtrl__["a" /* CategoriesCtrl */]).controller('ProductsCtrl', __WEBPACK_IMPORTED_MODULE_1__Products_ProductsCtrl__["a" /* ProductsCtrl */]).service('ProductsSvc', __WEBPACK_IMPORTED_MODULE_3__Products_ProductsSvc__["a" /* ProductsSvc */]).service('CategoriesSvc', __WEBPACK_IMPORTED_MODULE_4__Categories_CategoriesSvc__["a" /* CategoriesSvc */]).directive('productDetail', () => new __WEBPACK_IMPORTED_MODULE_5__Products_ProductsDtv__["a" /* ProductsDtv */]());
 
 /***/ }),
 
@@ -162,19 +160,6 @@ function Routes($routeProvider) {
     controller: 'ProductsCtrl as $ctrl'
   }).otherwise({ redirectTo: '/' });
 }
-
-/***/ }),
-
-/***/ 67:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-class HomeCtrl {
-	constructor() {}
-
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = HomeCtrl;
-
 
 /***/ }),
 

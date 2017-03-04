@@ -41,19 +41,19 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Start Bootstrap</a>
+                <a class="navbar-brand" href="#">OnlineShopping</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="#">About</a>
+                        <a href="http://alejandro-martinez.github.io/">About</a>
                     </li>
                     <li>
-                        <a href="#">Services</a>
+                        <a href="http://alejandro-martinez.github.io/">Services</a>
                     </li>
                     <li>
-                        <a href="#">Contact</a>
+                        <a href="http://alejandro-martinez.github.io/">Contact</a>
                     </li>
                 </ul>
             </div>
@@ -63,19 +63,17 @@
     </nav>
 
     <!-- Page Content -->
-    <div class="container" ng-controller="HomeCtrl">
+    <div class="container" ng-controller="ProductsCtrl">
         
         <div class="row">
 
             <div class="col-md-3">
-                <p class="lead">Shop example</p>
+                <p class="lead">Categorias</p>
                 <div class="list-group" ng-controller="CategoriesCtrl as $ctrl">
                     <a href="/#!/Products/{{ c.id }}" class="list-group-item" ng-repeat="c in $ctrl.categories"> {{ c.name }}</a>
                 </div>
             </div>
             <div class="col-md-9" ng-view>
-
-            
             </div>
 
         </div>
@@ -84,9 +82,6 @@
     <!-- /.container -->
 
     <div class="container">
-
-        <hr>
-
         <!-- Footer -->
         <footer>
             <div class="row">
