@@ -1,0 +1,21 @@
+<div class="col-sm-4 col-lg-4 col-md-4" ng-repeat="p in $ctrl.products">
+    <div class="thumbnail">
+        <img src="{{ p.thumbnail }}" alt="{{ p.title }}">
+        <div class="caption">
+            <h4 class="pull-right">{{ p.currency_symbol }} {{ p.price }}</h4>
+            <h4><a href="{{ p.permalink }}">{{ p.title }}</a>
+            </h4>
+            <p>{{ p.tsubtitle }} <a target="_blank" href="http://www.bootsnipp.com">Bootsnipp - http://bootsnipp.com</a>.</p>
+        </div>
+        <div class="ratings">
+            <p class="pull-right">15 reviews</p>
+            <p>
+                <span class="glyphicon glyphicon-star"></span>
+                <span class="glyphicon glyphicon-star"></span>
+                <span class="glyphicon glyphicon-star"></span>
+                <span class="glyphicon glyphicon-star"></span>
+                <span class="glyphicon glyphicon-star"></span>
+            </p>
+        </div>
+    </div>
+</div>

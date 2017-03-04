@@ -65,12 +65,22 @@
 
     <!-- Page Content -->
     <div class="container" ng-controller="HomeCtrl">
+        
+        <div class="row">
 
-        <div class="row" ng-view>
+            <div class="col-md-3">
+                <p class="lead">Shop example</p>
+                <div class="list-group" ng-controller="CategoriesCtrl as $ctrl">
+                    <a href="/#!/Products/{{ c.id }}" class="list-group-item" ng-repeat="c in $ctrl.categories"> {{ c.name }}</a>
+                </div>
+            </div>
+            <div class="col-md-9" ng-view>
 
             
-        </div>
+            </div>
 
+        </div>
+        
     </div>
     <!-- /.container -->
 
