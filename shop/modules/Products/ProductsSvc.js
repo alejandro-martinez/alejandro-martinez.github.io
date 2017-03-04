@@ -1,10 +1,8 @@
 export class ProductsSvc {
-	/*@ngInject*/
-	constructor($q) {
-		this._$q = $q;
+	constructor( $http ) {
+		this.http = $http;
 	}
 
-	getName() {
-		return this._$q.when("Bobby Tables");
-	}
 }
+
+ProductsSvc.$inject = ['$http'];

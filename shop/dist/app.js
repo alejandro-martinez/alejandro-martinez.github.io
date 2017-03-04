@@ -63,39 +63,31 @@
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 118);
+/******/ 	return __webpack_require__(__webpack_require__.s = 122);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 118:
+/***/ 122:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Home_HomeCtrl__ = __webpack_require__(63);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Products_ProductsSvc__ = __webpack_require__(64);
-__webpack_require__(65);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Home_HomeCtrl__ = __webpack_require__(66);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Home_Config__ = __webpack_require__(65);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Products_ProductsSvc__ = __webpack_require__(67);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Categories_CategoriesSvc__ = __webpack_require__(64);
+__webpack_require__(68);
+
+// Controllers
 
 
 
+// Services
 
 
-/* harmony default export */ __webpack_exports__["default"] = angular.module('app', []).controller('HomeCtrl', __WEBPACK_IMPORTED_MODULE_0__Home_HomeCtrl__["a" /* HomeCtrl */]).service('ProductsSvc', __WEBPACK_IMPORTED_MODULE_1__Products_ProductsSvc__["a" /* ProductsSvc */]);
 
-/***/ }),
-
-/***/ 63:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-class HomeCtrl {
-	constructor() {
-		this.name = "Shop";
-	}
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = HomeCtrl;
-
+/* harmony default export */ __webpack_exports__["default"] = angular.module('app', ['ngRoute']).config(__WEBPACK_IMPORTED_MODULE_1__Home_Config__["a" /* default */]).controller('HomeCtrl', __WEBPACK_IMPORTED_MODULE_0__Home_HomeCtrl__["a" /* HomeCtrl */]).service('ProductsSvc', __WEBPACK_IMPORTED_MODULE_2__Products_ProductsSvc__["a" /* ProductsSvc */]).service('CategoriesSvc', __WEBPACK_IMPORTED_MODULE_3__Categories_CategoriesSvc__["a" /* CategoriesSvc */]);
 
 /***/ }),
 
@@ -103,22 +95,82 @@ class HomeCtrl {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-class ProductsSvc {
-	/*@ngInject*/
-	constructor($q) {
-		this._$q = $q;
+class CategoriesSvc {
+	constructor($http) {
+		this.http = $http;
 	}
-
-	getName() {
-		return this._$q.when("Bobby Tables");
+	getAll() {
+		return this.http.get("https://api.mercadolibre.com/sites/MLA/categories");
 	}
 }
-/* harmony export (immutable) */ __webpack_exports__["a"] = ProductsSvc;
+/* harmony export (immutable) */ __webpack_exports__["a"] = CategoriesSvc;
 
 
 /***/ }),
 
 /***/ 65:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = Config;
+Config.$inject = ['$routeProvider'];
+
+function Config($routeProvider) {
+  $routeProvider.when('/', {
+    templateUrl: '/modules/Home/home.html',
+    controller: 'HomeCtrl as $ctrl'
+  }).when('/tags/:tagId', {
+    templateUrl: '/partials/template2.html',
+    controller: 'ctrl2'
+  }).when('/another', {
+    templateUrl: '/partials/template1.html',
+    controller: 'ctrl1'
+  }).otherwise({ redirectTo: '/' });
+}
+
+/***/ }),
+
+/***/ 66:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class HomeCtrl {
+	constructor(ProductsSvc, CategoriesSvc) {
+		this.productsSvc = ProductsSvc;
+		this.categoriesSvc = CategoriesSvc;
+
+		// Brings product's categories from MercadoLibre Api
+
+		this.categoriesSvc.getAll().then(categories => {
+			this.categories = categories.data;
+		});
+	}
+
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = HomeCtrl;
+
+HomeCtrl.$inject = ['ProductsSvc', 'CategoriesSvc'];
+
+/***/ }),
+
+/***/ 67:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class ProductsSvc {
+	constructor($http) {
+		this.http = $http;
+	}
+
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = ProductsSvc;
+
+
+ProductsSvc.$inject = ['$http'];
+
+/***/ }),
+
+/***/ 68:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

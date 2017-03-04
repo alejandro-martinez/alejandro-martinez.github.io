@@ -23,7 +23,8 @@ module.exports = {
         moduleExtensions: ['-loader'],
         enforceModuleExtension: false,
         alias: {
-            jquery: "jquery/src/jquery"
+            jquery: "jquery/src/jquery",
+            angularRoute: "angular-route/angular-route.js"
         }
       },
     output: {
