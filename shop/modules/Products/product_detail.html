@@ -8,13 +8,9 @@
         <p>{{ product.subtitle }} <a target="_blank" href="{{ product.permalink }}"></a></p>
     </div>
     <div class="ratings">
-        <p class="pull-right">15 review</p>
+        <p class="pull-right">{{ product.reviews }} calificaciones</p>
         <p>
-            <span class="glyphicon glyphicon-star"></span>
-            <span class="glyphicon glyphicon-star"></span>
-            <span class="glyphicon glyphicon-star"></span>
-            <span class="glyphicon glyphicon-star"></span>
-            <span class="glyphicon glyphicon-star"></span>
+            <span ng-repeat="p in product.rating track by $index" class="glyphicon glyphicon-star"></span>
         </p>
     </div>
 </div>

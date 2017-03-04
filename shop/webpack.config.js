@@ -28,6 +28,7 @@ module.exports = {
         }
       },
     output: {
+        publicPath: "https://alejandro-martinez/shop/dist/",
         path: __dirname + "/dist/",
         filename: '[name].js'
     },

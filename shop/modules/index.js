@@ -15,10 +15,13 @@ import { ProductsDtv} from "./Products/ProductsDtv"
 
 export default angular.module('app', ['ngRoute'])
 	.config( Routes )
-	.constant("Config", {
-		apiBaseURL: "https://api.mercadolibre.com/",
-		apiURL: "https://api.mercadolibre.com/sites/MLA/"
-	})
+	.constant("Config", function() {
+		var baseURL = "https://api.mercadolibre.com/";
+		return {	
+			apiBaseURL: baseURL,
+			apiURL: baseURL + "sites/MLA/"
+		}
+	}())
 	.controller('HomeCtrl', HomeCtrl )
 	.controller('CategoriesCtrl', CategoriesCtrl )
 	.controller('ProductsCtrl', ProductsCtrl )

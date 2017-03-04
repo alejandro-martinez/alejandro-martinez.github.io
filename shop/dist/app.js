@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
+/******/ 	__webpack_require__.p = "https://alejandro-martinez/shop/dist/";
 
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(__webpack_require__.s = 125);
@@ -95,10 +95,13 @@ __webpack_require__(71);
 //Directives
 
 
-/* harmony default export */ __webpack_exports__["default"] = angular.module('app', ['ngRoute']).config(__WEBPACK_IMPORTED_MODULE_3__Common_Routes__["a" /* default */]).constant("Config", {
-	apiBaseURL: "https://api.mercadolibre.com/",
-	apiURL: "https://api.mercadolibre.com/sites/MLA/"
-}).controller('HomeCtrl', __WEBPACK_IMPORTED_MODULE_2__Home_HomeCtrl__["a" /* HomeCtrl */]).controller('CategoriesCtrl', __WEBPACK_IMPORTED_MODULE_0__Categories_CategoriesCtrl__["a" /* CategoriesCtrl */]).controller('ProductsCtrl', __WEBPACK_IMPORTED_MODULE_1__Products_ProductsCtrl__["a" /* ProductsCtrl */]).service('ProductsSvc', __WEBPACK_IMPORTED_MODULE_4__Products_ProductsSvc__["a" /* ProductsSvc */]).service('CategoriesSvc', __WEBPACK_IMPORTED_MODULE_5__Categories_CategoriesSvc__["a" /* CategoriesSvc */]).directive('productDetail', () => new __WEBPACK_IMPORTED_MODULE_6__Products_ProductsDtv__["a" /* ProductsDtv */]());
+/* harmony default export */ __webpack_exports__["default"] = angular.module('app', ['ngRoute']).config(__WEBPACK_IMPORTED_MODULE_3__Common_Routes__["a" /* default */]).constant("Config", function () {
+	var baseURL = "https://api.mercadolibre.com/";
+	return {
+		apiBaseURL: baseURL,
+		apiURL: baseURL + "sites/MLA/"
+	};
+}()).controller('HomeCtrl', __WEBPACK_IMPORTED_MODULE_2__Home_HomeCtrl__["a" /* HomeCtrl */]).controller('CategoriesCtrl', __WEBPACK_IMPORTED_MODULE_0__Categories_CategoriesCtrl__["a" /* CategoriesCtrl */]).controller('ProductsCtrl', __WEBPACK_IMPORTED_MODULE_1__Products_ProductsCtrl__["a" /* ProductsCtrl */]).service('ProductsSvc', __WEBPACK_IMPORTED_MODULE_4__Products_ProductsSvc__["a" /* ProductsSvc */]).service('CategoriesSvc', __WEBPACK_IMPORTED_MODULE_5__Categories_CategoriesSvc__["a" /* CategoriesSvc */]).directive('productDetail', () => new __WEBPACK_IMPORTED_MODULE_6__Products_ProductsDtv__["a" /* ProductsDtv */]());
 
 /***/ }),
 
@@ -216,8 +219,13 @@ class ProductsDtv {
     link(scope, element, attrs) {
 
         scope.productsSvc.getProductPictures(scope.$parent.product.id).then(product => {
+            // Add main image 
             scope.$parent.product.image = product.data.pictures[0].secure_url;
             scope.product = scope.$parent.product;
+
+            // Fake rating and reviews values
+            scope.product.reviews = Math.floor(Math.random() * 50) + 1;
+            scope.product.rating = new Array(Math.floor(Math.random() * 5) + 1);
         });
     }
 }
