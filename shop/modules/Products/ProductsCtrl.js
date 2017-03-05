@@ -1,13 +1,21 @@
 export class ProductsCtrl {
-	constructor( ProductsSvc, $routeParams ) {
+	constructor( ProductsSvc, CategoriesSvc, $rootScope, $routeParams ) {
 		this.productsSvc = ProductsSvc;
 		
-		// Brings product's filtered by category from MercadoLibre Api
-		this.productsSvc.getByCategory( $routeParams.category_id ).then( ( products ) => {
+		$rootScope.$on("CATEGORIES_LOADED", () => {
+			CategoriesSvc.getAll().then(( categories ) => {
+				this.getByCategory( categories.data[0].id );	
+			});
+			
+		});
+	}
+	// Brings product's filtered by category from MercadoLibre Api
+	getByCategory( category_id ) {
+		this.productsSvc.getByCategory( category_id ).then( ( products ) => {
 			this.products = products.data.results;
 		});
 	}
 
 }
 
-ProductsCtrl.$inject = ['ProductsSvc', '$routeParams'];
+ProductsCtrl.$inject = ['ProductsSvc', 'CategoriesSvc', '$rootScope', '$routeParams'];

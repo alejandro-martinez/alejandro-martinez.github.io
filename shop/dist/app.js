@@ -63,23 +63,23 @@
 /******/ 	__webpack_require__.p = "https://alejandro-martinez/shop/dist/";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 125);
+/******/ 	return __webpack_require__(__webpack_require__.s = 124);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 125:
+/***/ 124:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Categories_CategoriesCtrl__ = __webpack_require__(64);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Products_ProductsCtrl__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Products_ProductsCtrl__ = __webpack_require__(67);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Common_Routes__ = __webpack_require__(66);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Products_ProductsSvc__ = __webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Products_ProductsSvc__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Categories_CategoriesSvc__ = __webpack_require__(65);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Products_ProductsDtv__ = __webpack_require__(69);
-__webpack_require__(71);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Products_ProductsDtv__ = __webpack_require__(68);
+__webpack_require__(70);
 
 // Controllers
 
@@ -108,13 +108,13 @@ __webpack_require__(71);
 
 "use strict";
 class CategoriesCtrl {
-	constructor(CategoriesSvc, $routeParams) {
+	constructor(CategoriesSvc, $rootScope, $routeParams) {
 		this.categoriesSvc = CategoriesSvc;
 
 		// Brings product's categories from MercadoLibre Api
-
 		this.categoriesSvc.getAll().then(categories => {
 			this.categories = categories.data;
+			$rootScope.$emit("CATEGORIES_LOADED");
 		});
 	}
 
@@ -122,7 +122,7 @@ class CategoriesCtrl {
 /* harmony export (immutable) */ __webpack_exports__["a"] = CategoriesCtrl;
 
 
-CategoriesCtrl.$inject = ['CategoriesSvc', '$routeParams'];
+CategoriesCtrl.$inject = ['CategoriesSvc', '$rootScope', '$routeParams'];
 
 /***/ }),
 
@@ -153,8 +153,8 @@ Routes.$inject = ['$routeProvider'];
 
 function Routes($routeProvider) {
   $routeProvider.when('/', {
-    templateUrl: '/modules/Home/home.html',
-    controller: 'HomeCtrl as $ctrl'
+    templateUrl: '/modules/Products/index.html',
+    controller: 'ProductsCtrl as $ctrl'
   }).when('/Products/:category_id', {
     templateUrl: '/modules/Products/index.html',
     controller: 'ProductsCtrl as $ctrl'
@@ -163,16 +163,23 @@ function Routes($routeProvider) {
 
 /***/ }),
 
-/***/ 68:
+/***/ 67:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 class ProductsCtrl {
-	constructor(ProductsSvc, $routeParams) {
+	constructor(ProductsSvc, CategoriesSvc, $rootScope, $routeParams) {
 		this.productsSvc = ProductsSvc;
 
-		// Brings product's filtered by category from MercadoLibre Api
-		this.productsSvc.getByCategory($routeParams.category_id).then(products => {
+		$rootScope.$on("CATEGORIES_LOADED", () => {
+			CategoriesSvc.getAll().then(categories => {
+				this.getByCategory(categories.data[0].id);
+			});
+		});
+	}
+	// Brings product's filtered by category from MercadoLibre Api
+	getByCategory(category_id) {
+		this.productsSvc.getByCategory(category_id).then(products => {
 			this.products = products.data.results;
 		});
 	}
@@ -181,11 +188,11 @@ class ProductsCtrl {
 /* harmony export (immutable) */ __webpack_exports__["a"] = ProductsCtrl;
 
 
-ProductsCtrl.$inject = ['ProductsSvc', '$routeParams'];
+ProductsCtrl.$inject = ['ProductsSvc', 'CategoriesSvc', '$rootScope', '$routeParams'];
 
 /***/ }),
 
-/***/ 69:
+/***/ 68:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -219,7 +226,7 @@ class ProductsDtv {
 
 /***/ }),
 
-/***/ 70:
+/***/ 69:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -241,7 +248,7 @@ class ProductsSvc {
 
 /***/ }),
 
-/***/ 71:
+/***/ 70:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
