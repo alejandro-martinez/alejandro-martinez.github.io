@@ -43,12 +43,12 @@ module.exports = {
 		        })
             },
             {
-              test: /\.js$/,
-              loaders: ['babel-loader']      // note that specifying 'babel' or 'babel-loader' is equivalent for Webpack
+                test: /\.js$/,
+                loaders: ['babel-loader?compact=false']      // note that specifying 'babel' or 'babel-loader' is equivalent for Webpack
             },
             {
-              test: /\.(eot|svg|ttf|woff|woff2)$/,
-              loader: 'file?name=public/fonts/[name].[ext]'
+                test: /\.(eot|svg|ttf|woff|woff2)$/,
+                loader: 'file?name=public/fonts/[name].[ext]'
             }
         ]
     },
