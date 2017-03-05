@@ -41,7 +41,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">OnlineShopping</a>
+                <a class="navbar-brand" href="#">DigitalStore</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -70,7 +70,7 @@
             <div class="col-md-3">
                 <p class="lead">Categorias</p>
                 <div class="list-group" ng-controller="CategoriesCtrl as $ctrl">
-                    <a href="/#!/Products/{{ c.id }}" class="list-group-item" ng-repeat="c in $ctrl.categories"> {{ c.name }}</a>
+                    <a href="#!/Products/{{ c.id }}" class="list-group-item" ng-repeat="c in $ctrl.categories"> {{ c.name }}</a>
                 </div>
             </div>
             <div class="col-md-9" ng-view>

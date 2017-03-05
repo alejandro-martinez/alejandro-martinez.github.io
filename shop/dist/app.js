@@ -152,10 +152,10 @@ Routes.$inject = ['$routeProvider'];
 
 function Routes($routeProvider) {
   $routeProvider.when('/', {
-    templateUrl: '/modules/Products/index.html',
+    templateUrl: 'modules/Products/index.html',
     controller: 'ProductsCtrl as $ctrl'
   }).when('/Products/:category_id', {
-    templateUrl: '/modules/Products/index.html',
+    templateUrl: 'modules/Products/index.html',
     controller: 'ProductsCtrl as $ctrl'
   }).otherwise({ redirectTo: '/' });
 }
@@ -201,7 +201,7 @@ class ProductsDtv {
     constructor() {
         this.restrict = 'E';
         this.replace = true;
-        this.templateUrl = '/modules/Products/product_detail.html';
+        this.templateUrl = 'modules/Products/product_detail.html';
         this.scope = {};
     }
 
