@@ -5,10 +5,9 @@ export class CategoriesCtrl {
 		// Brings product's categories from MercadoLibre Api
 		this.categoriesSvc.getAll().then( ( categories ) => {
 			this.categories = categories.data;
-			$rootScope.$emit("CATEGORIES_LOADED");
+			$rootScope.$emit("CATEGORIES_LOADED", categories.data);
 		});
 	}
-
 }
 
 CategoriesCtrl.$inject = ['CategoriesSvc','$rootScope','$routeParams'];

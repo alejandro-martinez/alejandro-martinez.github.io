@@ -1,12 +1,13 @@
 export class ProductsCtrl {
 	constructor( ProductsSvc, CategoriesSvc, $rootScope, $routeParams ) {
 		this.productsSvc = ProductsSvc;
+
+		if ( angular.isDefined( $routeParams.category_id )) {
+			this.getByCategory( $routeParams.category_id );	
+		}
 		
-		$rootScope.$on("CATEGORIES_LOADED", () => {
-			CategoriesSvc.getAll().then(( categories ) => {
-				this.getByCategory( categories.data[0].id );	
-			});
-			
+		$rootScope.$on("CATEGORIES_LOADED", ( ev, categories ) => {
+			this.getByCategory( categories[0].id );	
 		});
 	}
 	// Brings product's filtered by category from MercadoLibre Api

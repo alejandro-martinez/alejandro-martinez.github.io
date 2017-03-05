@@ -114,10 +114,9 @@ class CategoriesCtrl {
 		// Brings product's categories from MercadoLibre Api
 		this.categoriesSvc.getAll().then(categories => {
 			this.categories = categories.data;
-			$rootScope.$emit("CATEGORIES_LOADED");
+			$rootScope.$emit("CATEGORIES_LOADED", categories.data);
 		});
 	}
-
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = CategoriesCtrl;
 
@@ -171,10 +170,12 @@ class ProductsCtrl {
 	constructor(ProductsSvc, CategoriesSvc, $rootScope, $routeParams) {
 		this.productsSvc = ProductsSvc;
 
-		$rootScope.$on("CATEGORIES_LOADED", () => {
-			CategoriesSvc.getAll().then(categories => {
-				this.getByCategory(categories.data[0].id);
-			});
+		if (angular.isDefined($routeParams.category_id)) {
+			this.getByCategory($routeParams.category_id);
+		}
+
+		$rootScope.$on("CATEGORIES_LOADED", (ev, categories) => {
+			this.getByCategory(categories[0].id);
 		});
 	}
 	// Brings product's filtered by category from MercadoLibre Api
