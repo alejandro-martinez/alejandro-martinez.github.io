@@ -28,12 +28,12 @@ export class PagerDtv {
     	}
     	
     	$scope.prevPage = function() {
-    		$scope.currentPage-= 1;
+    		if ( $scope.currentPage >= 10)
+    			$scope.currentPage-= 10;
     	}
 
     	$scope.nextPage = function() {
-    		if ( $scope.currentPage > 1)
-    			$scope.currentPage+= 1;	
+    		$scope.currentPage+= 10;	
     	}
 
     	$scope.setPage = function( _page ) {
