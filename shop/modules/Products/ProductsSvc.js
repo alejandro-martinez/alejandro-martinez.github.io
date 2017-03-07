@@ -5,8 +5,8 @@ export class ProductsSvc {
 	}
 	getByCategory( category_id, queryParams ) {
 		return this.http.get( this.config.apiURL 
-			+  "search/category=" +  category_id 
-			+  "&limit=" + queryParams.limit
+			+  "search?category=" +  category_id 
+			+  "&limit=" + queryParams.itemsPerPage
 			+  "&offset=" + queryParams.offset );
 	}
 	getProductPictures( product_id) {

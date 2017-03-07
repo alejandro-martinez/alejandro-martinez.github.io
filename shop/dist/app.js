@@ -150,35 +150,48 @@ class CategoriesSvc {
 
 "use strict";
 class PagerDtv {
-    constructor() {
-        this.restrict = 'E';
-        this.replace = true;
-        this.templateUrl = 'modules/Common/pager.html';
-        this.scope = {
-            data: '='
-        };
+  constructor() {
+    this.restrict = 'E';
+    this.replace = true;
+    this.templateUrl = 'modules/Common/pager.html';
+    this.scope = {
+      data: '=',
+      pagination: '='
+    };
+  }
+
+  controller($scope) {
+
+    $scope.currentPage = 1;
+    $scope.totalPages = 1;
+    $scope.pagedItems = [];
+
+    // Calculate the amount of pages that the pager will have, if there is available data
+    if ($scope.data) {
+      $scope.pagedItems = function () {
+        console.log(tmp_array);
+        var tmp_array = [];
+        for (let i = $scope.currentPage; i < $scope.currentPage + $scope.pagination.itemsPerPage; i++) {
+          tmp_array.push(i);
+        }
+        return tmp_array;
+      };
     }
 
-    controller($scope) {
-        console.log($scope.data);
-        $scope.currentPage = 1;
-        $scope.totalPages = 1;
-        $scope.pagedItems = [];
+    $scope.prevPage = function () {
+      $scope.currentPage -= 1;
+    };
 
-        $scope.prevPage = function () {
-            $scope.currentPage += 1;
-        };
+    $scope.nextPage = function () {
+      if ($scope.currentPage > 1) $scope.currentPage += 1;
+    };
 
-        $scope.nextPage = function () {
-            if ($scope.currentPage > 1) $scope.currentPage += 1;
-        };
+    $scope.setPage = function (_page) {
+      $scope.currentPage = _page;
+    };
+  }
 
-        $scope.setPage = function (_page) {
-            $scope.currentPage = _page;
-        };
-    }
-
-    link(scope, element, attrs) {}
+  link(scope, element, attrs) {}
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = PagerDtv;
 
@@ -212,6 +225,11 @@ class ProductsCtrl {
 	constructor(ProductsSvc, CategoriesSvc, $rootScope, $routeParams) {
 		this.productsSvc = ProductsSvc;
 		this.data_loaded = false;
+		this.pagination = {
+			currentPage: 1,
+			offset: 0,
+			itemsPerPage: 12
+		};
 
 		if (angular.isDefined($routeParams.category_id)) {
 			this.getByCategory($routeParams.category_id);
@@ -223,7 +241,7 @@ class ProductsCtrl {
 	}
 	// Brings product's filtered by category from MercadoLibre Api
 	getByCategory(category_id) {
-		this.productsSvc.getByCategory(category_id).then(products => {
+		this.productsSvc.getByCategory(category_id, this.pagination).then(products => {
 			this.products = products.data;
 			console.log("data loaded", products);
 			this.data_loaded = true;
@@ -280,10 +298,9 @@ class ProductsSvc {
 	constructor($http, Config) {
 		this.http = $http;
 		this.config = Config;
-		this.productsPerPage = 12;
 	}
-	getByCategory(category_id) {
-		return this.http.get(this.config.apiURL + "search/category=" + category_id);
+	getByCategory(category_id, queryParams) {
+		return this.http.get(this.config.apiURL + "search?category=" + category_id + "&limit=" + queryParams.itemsPerPage + "&offset=" + queryParams.offset);
 	}
 	getProductPictures(product_id) {
 		return this.http.get(this.config.apiBaseURL + "items/" + product_id);

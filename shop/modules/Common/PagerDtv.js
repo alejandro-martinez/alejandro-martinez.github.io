@@ -15,8 +15,20 @@ export class PagerDtv {
     	$scope.totalPages = 1;
     	$scope.pagedItems = [];
 
+    	// Calculate the amount of pages that the pager will have, if there is available data
+    	if ( $scope.data ) {
+    		$scope.pagedItems = function() {
+    			console.log(tmp_array)
+				var tmp_array = [];
+				for (let i= $scope.currentPage; i < $scope.currentPage + $scope.pagination.itemsPerPage; i++) {
+					tmp_array.push( i );
+				}
+				return tmp_array;
+			}
+    	}
+    	
     	$scope.prevPage = function() {
-    		$scope.currentPage+= 1;
+    		$scope.currentPage-= 1;
     	}
 
     	$scope.nextPage = function() {
@@ -29,7 +41,7 @@ export class PagerDtv {
     	}        
     }
 
-    link(scope, element, attrs) {
+    link( scope, element, attrs ) {
     	
     }
 }

@@ -4,8 +4,8 @@ export class ProductsCtrl {
 		this.data_loaded = false;
 		this.pagination = {
 			currentPage: 1,
-			offset: 12,
-			limit: 12
+			offset: 0,
+			itemsPerPage: 12
 		}
 
 		if ( angular.isDefined( $routeParams.category_id )) {
