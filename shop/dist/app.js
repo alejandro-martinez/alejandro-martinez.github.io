@@ -115,6 +115,7 @@ class CategoriesCtrl {
 
 		// Brings product's categories from MercadoLibre Api
 		this.categoriesSvc.getAll().then(categories => {
+			console.log("Categories");
 			this.categories = categories.data;
 			$rootScope.$emit("CATEGORIES_LOADED", categories.data);
 		});
@@ -160,19 +161,25 @@ class PagerDtv {
     };
   }
 
-  controller($scope, $rootScope) {
+  controller($scope, $rootScope, $timeout) {
 
     $scope.currentPage = 1;
 
-    $scope.$watch("currentPage", function (oldPage, newPage) {
-      if (newPage !== 1) {
-        $rootScope.$emit("PAGE_CHANGED", $scope.currentPage);
-      }
+    $scope.$watch("currentPage", () => {
+      // Wait for the change on the currentPage
+      $timeout(() => {
+        if ($scope.currentPage !== 1) {
+          $scope.pagination.offset = $scope.currentPage * $scope.pagination.offset;
+          $rootScope.$emit("PAGE_CHANGED", $scope.currentPage);
+        }
+      }, 1);
     });
 
     // Build the array of number pages, if there is available data
-    if ($scope.data) {
+    if ($scope.data && $scope.data.results) {
 
+      // Sets the offset with the number of items of the actual page	
+      $scope.pagination.offset = $scope.data.results.length;
       $scope.totalPages = $scope.data.paging.total / $scope.pagination.itemsPerPage;
 
       $scope.pagedItems = function () {
@@ -195,6 +202,7 @@ class PagerDtv {
     };
 
     $scope.setPage = function (_page) {
+      console.log("NEW pageee", _page);
       $scope.currentPage = _page;
     };
   }
@@ -233,6 +241,8 @@ class ProductsCtrl {
 	constructor(ProductsSvc, CategoriesSvc, $rootScope, $routeParams) {
 		this.productsSvc = ProductsSvc;
 		this.data_loaded = false;
+		this.filter_category = 0;
+
 		this.pagination = {
 			currentPage: 1,
 			offset: 0,
@@ -240,22 +250,26 @@ class ProductsCtrl {
 		};
 
 		if (angular.isDefined($routeParams.category_id)) {
-			this.getByCategory($routeParams.category_id);
+			console.log("1er if");
+			this.filter_category = $routeParams.category_id;
+			this.getByCategory();
 		}
 
 		$rootScope.$on("CATEGORIES_LOADED", (ev, categories) => {
+			this.filter_category = categories[0].id;
 			this.getByCategory(categories[0].id);
 		});
 
-		$rootScope.$on("PAGE_CHANGED", function (ev, data) {
-			console.log("PAGE_CHANGED", data);
+		$rootScope.$on("PAGE_CHANGED", (ev, data) => {
+			if (this.pagination.offset > 0) {
+				this.getByCategory();
+			}
 		});
 	}
 	// Brings product's filtered by category from MercadoLibre Api
-	getByCategory(category_id) {
-		this.productsSvc.getByCategory(category_id, this.pagination).then(products => {
+	getByCategory() {
+		this.productsSvc.getByCategory(this.filter_category, this.pagination).then(products => {
 			this.products = products.data;
-			console.log("data loaded", products);
 			this.data_loaded = true;
 		});
 	}

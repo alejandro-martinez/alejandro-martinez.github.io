@@ -9,19 +9,25 @@ export class PagerDtv {
         }
     }
 
-    controller( $scope, $rootScope) {
+    controller( $scope, $rootScope, $timeout) {
 
     	$scope.currentPage = 1;
 
-    	$scope.$watch("currentPage", function( oldPage, newPage) {
-    		if ( newPage !== 1) {
-    			$rootScope.$emit("PAGE_CHANGED", $scope.currentPage);
-    		}
+    	$scope.$watch("currentPage",() => {
+    		// Wait for the change on the currentPage
+    		$timeout(() => {
+    			if ( $scope.currentPage !== 1) {
+	    			$scope.pagination.offset = $scope.currentPage * $scope.pagination.offset;
+	    			$rootScope.$emit("PAGE_CHANGED", $scope.currentPage);
+	    		}
+    		}, 1 );
     	})
 
     	// Build the array of number pages, if there is available data
-    	if ( $scope.data ) {
-    		
+    	if ( $scope.data && $scope.data.results ) {
+
+    		// Sets the offset with the number of items of the actual page	
+    		$scope.pagination.offset = $scope.data.results.length;
     		$scope.totalPages = $scope.data.paging.total / $scope.pagination.itemsPerPage;
 
     		$scope.pagedItems = function() {
@@ -45,6 +51,7 @@ export class PagerDtv {
     	}
 
     	$scope.setPage = function( _page ) {
+    		console.log("NEW pageee",_page)
     		$scope.currentPage = _page;
     	}        
     }

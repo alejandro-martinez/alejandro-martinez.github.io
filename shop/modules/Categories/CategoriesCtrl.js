@@ -4,6 +4,7 @@ export class CategoriesCtrl {
 		
 		// Brings product's categories from MercadoLibre Api
 		this.categoriesSvc.getAll().then( ( categories ) => {
+			console.log("Categories")
 			this.categories = categories.data;
 			$rootScope.$emit("CATEGORIES_LOADED", categories.data);
 		});
