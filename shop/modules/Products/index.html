@@ -1,3 +1,7 @@
-<div class="col-sm-4 col-lg-4 col-md-4" ng-repeat="product in $ctrl.products">
+<div class="col-sm-4 col-lg-4 col-md-4" ng-repeat="product in $ctrl.products.results">
     <product-detail></product-detail>
 </div>
+<pager 	ng-if="$ctrl.data_loaded" 
+		data="$ctrl.products"
+		pagination="$ctrl.pagination">
+</pager>

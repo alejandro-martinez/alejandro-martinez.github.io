@@ -10,6 +10,7 @@ import { ProductsSvc } from "./Products/ProductsSvc";
 import { CategoriesSvc } from "./Categories/CategoriesSvc";
 
 //Directives
+import { PagerDtv } from "./Common/PagerDtv";
 import { ProductsDtv} from "./Products/ProductsDtv"
 
 export default angular.module('app', ['ngRoute'])
@@ -25,4 +26,5 @@ export default angular.module('app', ['ngRoute'])
 	.controller('ProductsCtrl', ProductsCtrl )
 	.service('ProductsSvc', ProductsSvc )
 	.service('CategoriesSvc', CategoriesSvc )
+	.directive('pager', () => new PagerDtv)
 	.directive('productDetail', () => new ProductsDtv)

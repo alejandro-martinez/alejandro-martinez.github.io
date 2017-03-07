@@ -63,23 +63,24 @@
 /******/ 	__webpack_require__.p = "https://alejandro-martinez/shop/dist/";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 124);
+/******/ 	return __webpack_require__(__webpack_require__.s = 125);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 124:
+/***/ 125:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Categories_CategoriesCtrl__ = __webpack_require__(64);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Products_ProductsCtrl__ = __webpack_require__(67);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Common_Routes__ = __webpack_require__(66);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Products_ProductsSvc__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Products_ProductsCtrl__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Common_Routes__ = __webpack_require__(67);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Products_ProductsSvc__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Categories_CategoriesSvc__ = __webpack_require__(65);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Products_ProductsDtv__ = __webpack_require__(68);
-__webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Common_PagerDtv__ = __webpack_require__(66);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Products_ProductsDtv__ = __webpack_require__(69);
+__webpack_require__(71);
 
 // Controllers
 
@@ -93,13 +94,14 @@ __webpack_require__(70);
 //Directives
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = angular.module('app', ['ngRoute']).config(__WEBPACK_IMPORTED_MODULE_2__Common_Routes__["a" /* default */]).constant("Config", function () {
 	var baseURL = "https://api.mercadolibre.com/";
 	return {
 		apiBaseURL: baseURL,
 		apiURL: baseURL + "sites/MLA/"
 	};
-}()).controller('CategoriesCtrl', __WEBPACK_IMPORTED_MODULE_0__Categories_CategoriesCtrl__["a" /* CategoriesCtrl */]).controller('ProductsCtrl', __WEBPACK_IMPORTED_MODULE_1__Products_ProductsCtrl__["a" /* ProductsCtrl */]).service('ProductsSvc', __WEBPACK_IMPORTED_MODULE_3__Products_ProductsSvc__["a" /* ProductsSvc */]).service('CategoriesSvc', __WEBPACK_IMPORTED_MODULE_4__Categories_CategoriesSvc__["a" /* CategoriesSvc */]).directive('productDetail', () => new __WEBPACK_IMPORTED_MODULE_5__Products_ProductsDtv__["a" /* ProductsDtv */]());
+}()).controller('CategoriesCtrl', __WEBPACK_IMPORTED_MODULE_0__Categories_CategoriesCtrl__["a" /* CategoriesCtrl */]).controller('ProductsCtrl', __WEBPACK_IMPORTED_MODULE_1__Products_ProductsCtrl__["a" /* ProductsCtrl */]).service('ProductsSvc', __WEBPACK_IMPORTED_MODULE_3__Products_ProductsSvc__["a" /* ProductsSvc */]).service('CategoriesSvc', __WEBPACK_IMPORTED_MODULE_4__Categories_CategoriesSvc__["a" /* CategoriesSvc */]).directive('pager', () => new __WEBPACK_IMPORTED_MODULE_5__Common_PagerDtv__["a" /* PagerDtv */]()).directive('productDetail', () => new __WEBPACK_IMPORTED_MODULE_6__Products_ProductsDtv__["a" /* ProductsDtv */]());
 
 /***/ }),
 
@@ -147,6 +149,46 @@ class CategoriesSvc {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+class PagerDtv {
+    constructor() {
+        this.restrict = 'E';
+        this.replace = true;
+        this.templateUrl = 'modules/Common/pager.html';
+        this.scope = {
+            data: '='
+        };
+    }
+
+    controller($scope) {
+        console.log($scope.data);
+        $scope.currentPage = 1;
+        $scope.totalPages = 1;
+        $scope.pagedItems = [];
+
+        $scope.prevPage = function () {
+            $scope.currentPage += 1;
+        };
+
+        $scope.nextPage = function () {
+            if ($scope.currentPage > 1) $scope.currentPage += 1;
+        };
+
+        $scope.setPage = function (_page) {
+            $scope.currentPage = _page;
+        };
+    }
+
+    link(scope, element, attrs) {}
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = PagerDtv;
+
+
+/***/ }),
+
+/***/ 67:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = Routes;
 Routes.$inject = ['$routeProvider'];
 
@@ -162,13 +204,14 @@ function Routes($routeProvider) {
 
 /***/ }),
 
-/***/ 67:
+/***/ 68:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 class ProductsCtrl {
 	constructor(ProductsSvc, CategoriesSvc, $rootScope, $routeParams) {
 		this.productsSvc = ProductsSvc;
+		this.data_loaded = false;
 
 		if (angular.isDefined($routeParams.category_id)) {
 			this.getByCategory($routeParams.category_id);
@@ -181,7 +224,9 @@ class ProductsCtrl {
 	// Brings product's filtered by category from MercadoLibre Api
 	getByCategory(category_id) {
 		this.productsSvc.getByCategory(category_id).then(products => {
-			this.products = products.data.results;
+			this.products = products.data;
+			console.log("data loaded", products);
+			this.data_loaded = true;
 		});
 	}
 
@@ -193,7 +238,7 @@ ProductsCtrl.$inject = ['ProductsSvc', 'CategoriesSvc', '$rootScope', '$routePar
 
 /***/ }),
 
-/***/ 68:
+/***/ 69:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -227,7 +272,7 @@ class ProductsDtv {
 
 /***/ }),
 
-/***/ 69:
+/***/ 70:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -235,10 +280,10 @@ class ProductsSvc {
 	constructor($http, Config) {
 		this.http = $http;
 		this.config = Config;
+		this.productsPerPage = 12;
 	}
 	getByCategory(category_id) {
-		var limit = 10;
-		return this.http.get(this.config.apiURL + "hot_items/search?limit=" + limit + "&category=" + category_id);
+		return this.http.get(this.config.apiURL + "search/category=" + category_id);
 	}
 	getProductPictures(product_id) {
 		return this.http.get(this.config.apiBaseURL + "items/" + product_id);
@@ -249,7 +294,7 @@ class ProductsSvc {
 
 /***/ }),
 
-/***/ 70:
+/***/ 71:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
