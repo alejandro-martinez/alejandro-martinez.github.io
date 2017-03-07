@@ -11,7 +11,6 @@ export class ProductsCtrl {
 		}
 
 		if ( angular.isDefined( $routeParams.category_id )) {
-			console.log("1er if")
 			this.filter_category = $routeParams.category_id;
 			this.getByCategory();	
 		}
@@ -27,11 +26,40 @@ export class ProductsCtrl {
 			}
 		})
 	}
+	loadImages() {
+		var ids = [];
+		this.products.results.map(( p ) => {
+			ids.push( p.id );
+		});
+
+		this.productsSvc.getProductPictures(ids.join(",")).then(( products ) => {
+    		console.log(products.data)
+    		// Add images to products on the page
+    		this.products.results.map((p) => {
+    			let product_with_image = products.data.filter((o) => {
+    				return o.id === p.id;
+    			});
+
+    			p.image = product_with_image[0].pictures[0].url;
+    		})
+    	});
+	}
 	// Brings product's filtered by category from MercadoLibre Api
 	getByCategory() {
+		
 		this.productsSvc.getByCategory( this.filter_category, this.pagination ).then( ( products ) => {
-			this.products = products.data;
+			
+			// Add random rating and reviews values
+			products.data.results.map(( p ) => {
+				p.reviews = Math.floor(Math.random() * 50) + 1  
+    			p.rating = new Array( Math.floor(Math.random() * 5) + 1 );	
+			});
+    		
+    		this.products = products.data;
+
 			this.data_loaded = true;
+		
+			this.loadImages();
 		});
 	}
 

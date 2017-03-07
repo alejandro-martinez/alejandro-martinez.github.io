@@ -250,7 +250,6 @@ class ProductsCtrl {
 		};
 
 		if (angular.isDefined($routeParams.category_id)) {
-			console.log("1er if");
 			this.filter_category = $routeParams.category_id;
 			this.getByCategory();
 		}
@@ -266,11 +265,40 @@ class ProductsCtrl {
 			}
 		});
 	}
+	loadImages() {
+		var ids = [];
+		this.products.results.map(p => {
+			ids.push(p.id);
+		});
+
+		this.productsSvc.getProductPictures(ids.join(",")).then(products => {
+			console.log(products.data);
+			// Add images to products on the page
+			this.products.results.map(p => {
+				let product_with_image = products.data.filter(o => {
+					return o.id === p.id;
+				});
+
+				p.image = product_with_image[0].pictures[0].url;
+			});
+		});
+	}
 	// Brings product's filtered by category from MercadoLibre Api
 	getByCategory() {
+
 		this.productsSvc.getByCategory(this.filter_category, this.pagination).then(products => {
+
+			// Add random rating and reviews values
+			products.data.results.map(p => {
+				p.reviews = Math.floor(Math.random() * 50) + 1;
+				p.rating = new Array(Math.floor(Math.random() * 5) + 1);
+			});
+
 			this.products = products.data;
+
 			this.data_loaded = true;
+
+			this.loadImages();
 		});
 	}
 
@@ -299,16 +327,14 @@ class ProductsDtv {
     }
 
     link(scope, element, attrs) {
-
-        scope.productsSvc.getProductPictures(scope.$parent.product.id).then(product => {
-            // Add main image 
-            scope.$parent.product.image = product.data.pictures[0].secure_url;
-            scope.product = scope.$parent.product;
-
-            // Fake rating and reviews values
-            scope.product.reviews = Math.floor(Math.random() * 50) + 1;
-            scope.product.rating = new Array(Math.floor(Math.random() * 5) + 1);
-        });
+        scope.product = scope.$parent.product;
+        /*
+        scope.productsSvc.getProductPictures( scope.$parent.product.id ).then(( product ) => {
+        	// Add main image 
+        	scope.$parent.product.image = product.data.pictures[0].secure_url;
+        	scope.product = scope.$parent.product;
+        		
+        })*/
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = ProductsDtv;
@@ -328,8 +354,8 @@ class ProductsSvc {
 	getByCategory(category_id, queryParams) {
 		return this.http.get(this.config.apiURL + "search?category=" + category_id + "&limit=" + queryParams.itemsPerPage + "&offset=" + queryParams.offset);
 	}
-	getProductPictures(product_id) {
-		return this.http.get(this.config.apiBaseURL + "items/" + product_id);
+	getProductPictures(product_ids) {
+		return this.http.get(this.config.apiBaseURL + "items?ids=" + product_ids);
 	}
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = ProductsSvc;

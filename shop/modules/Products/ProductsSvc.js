@@ -9,7 +9,7 @@ export class ProductsSvc {
 			+  "&limit=" + queryParams.itemsPerPage
 			+  "&offset=" + queryParams.offset );
 	}
-	getProductPictures( product_id) {
-		return this.http.get( this.config.apiBaseURL + "items/" + product_id);	
+	getProductPictures( product_ids ) {
+		return this.http.get( this.config.apiBaseURL + "items?ids=" + product_ids);	
 	}
 }
