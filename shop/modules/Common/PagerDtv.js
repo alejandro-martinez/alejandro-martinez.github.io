@@ -9,19 +9,27 @@ export class PagerDtv {
         }
     }
 
-    controller( $scope ) {
-    	
-        $scope.currentPage = 1;
-    	$scope.totalPages = 1;
-    	$scope.pagedItems = [];
+    controller( $scope, $rootScope) {
 
-    	// Calculate the amount of pages that the pager will have, if there is available data
+    	$scope.currentPage = 1;
+
+    	$scope.$watch("currentPage", function( oldPage, newPage) {
+    		if ( newPage !== 1) {
+    			$rootScope.$emit("PAGE_CHANGED", $scope.currentPage);
+    		}
+    	})
+
+    	// Build the array of number pages, if there is available data
     	if ( $scope.data ) {
+    		
+    		$scope.totalPages = $scope.data.paging.total / $scope.pagination.itemsPerPage;
+
     		$scope.pagedItems = function() {
-    			console.log(tmp_array)
 				var tmp_array = [];
-				for (let i= $scope.currentPage; i < $scope.currentPage + $scope.pagination.itemsPerPage; i++) {
-					tmp_array.push( i );
+				if ( $scope.currentPage <= $scope.totalPages ) {
+					for (let i= $scope.currentPage; i < $scope.currentPage + $scope.pagination.itemsPerPage; i++) {
+						tmp_array.push( i );
+					}
 				}
 				return tmp_array;
 			}

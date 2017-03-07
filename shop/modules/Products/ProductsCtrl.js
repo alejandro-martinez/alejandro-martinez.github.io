@@ -15,6 +15,10 @@ export class ProductsCtrl {
 		$rootScope.$on("CATEGORIES_LOADED", ( ev, categories ) => {
 			this.getByCategory( categories[0].id );	
 		});
+
+		$rootScope.$on("PAGE_CHANGED", function(ev, data) {
+			console.log( "PAGE_CHANGED", data)
+		})
 	}
 	// Brings product's filtered by category from MercadoLibre Api
 	getByCategory( category_id ) {

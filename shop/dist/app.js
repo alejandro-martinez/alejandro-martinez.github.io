@@ -160,19 +160,27 @@ class PagerDtv {
     };
   }
 
-  controller($scope) {
+  controller($scope, $rootScope) {
 
     $scope.currentPage = 1;
-    $scope.totalPages = 1;
-    $scope.pagedItems = [];
 
-    // Calculate the amount of pages that the pager will have, if there is available data
+    $scope.$watch("currentPage", function (oldPage, newPage) {
+      if (newPage !== 1) {
+        $rootScope.$emit("PAGE_CHANGED", $scope.currentPage);
+      }
+    });
+
+    // Build the array of number pages, if there is available data
     if ($scope.data) {
+
+      $scope.totalPages = $scope.data.paging.total / $scope.pagination.itemsPerPage;
+
       $scope.pagedItems = function () {
-        console.log(tmp_array);
         var tmp_array = [];
-        for (let i = $scope.currentPage; i < $scope.currentPage + $scope.pagination.itemsPerPage; i++) {
-          tmp_array.push(i);
+        if ($scope.currentPage <= $scope.totalPages) {
+          for (let i = $scope.currentPage; i < $scope.currentPage + $scope.pagination.itemsPerPage; i++) {
+            tmp_array.push(i);
+          }
         }
         return tmp_array;
       };
@@ -237,6 +245,10 @@ class ProductsCtrl {
 
 		$rootScope.$on("CATEGORIES_LOADED", (ev, categories) => {
 			this.getByCategory(categories[0].id);
+		});
+
+		$rootScope.$on("PAGE_CHANGED", function (ev, data) {
+			console.log("PAGE_CHANGED", data);
 		});
 	}
 	// Brings product's filtered by category from MercadoLibre Api
