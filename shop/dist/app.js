@@ -185,7 +185,7 @@ class PagerDtv {
       $scope.pagedItems = function () {
         var tmp_array = [];
         if ($scope.currentPage <= $scope.totalPages) {
-          for (let i = $scope.currentPage; i < $scope.currentPage + $scope.pagination.itemsPerPage; i++) {
+          for (let i = $scope.currentPage; i < $scope.currentPage + $scope.pagination.visiblePages; i++) {
             tmp_array.push(i);
           }
         }
@@ -202,7 +202,6 @@ class PagerDtv {
     };
 
     $scope.setPage = function (_page) {
-      console.log("NEW pageee", _page);
       $scope.currentPage = _page;
     };
   }
@@ -246,7 +245,8 @@ class ProductsCtrl {
 		this.pagination = {
 			currentPage: 1,
 			offset: 0,
-			itemsPerPage: 12
+			itemsPerPage: 12,
+			visiblePages: 6
 		};
 
 		if (angular.isDefined($routeParams.category_id)) {
@@ -259,10 +259,9 @@ class ProductsCtrl {
 			this.getByCategory(categories[0].id);
 		});
 
+		// On pagination event
 		$rootScope.$on("PAGE_CHANGED", (ev, data) => {
-			if (this.pagination.offset > 0) {
-				this.getByCategory();
-			}
+			if (this.pagination.offset > 0) this.getByCategory();
 		});
 	}
 	search() {
@@ -274,15 +273,17 @@ class ProductsCtrl {
 			});
 		}
 	}
+	// Iterates over the products and request ther images
 	loadImages() {
+
 		var ids = [];
+
 		this.products.results.map(p => {
 			ids.push(p.id);
 		});
 
 		this.productsSvc.getProductPictures(ids.join(",")).then(products => {
 
-			// Add images to products on the page
 			this.products.results.map(p => {
 				let product_with_image = products.data.filter(o => {
 					return o.id === p.id;
@@ -297,6 +298,8 @@ class ProductsCtrl {
 
 		this.productsSvc.getByCategory(this.filter_category, this.pagination).then(products => {
 
+			console.log(products.data);
+
 			// Add random rating and reviews values
 			products.data.results.map(p => {
 				p.reviews = Math.floor(Math.random() * 50) + 1;
@@ -305,6 +308,7 @@ class ProductsCtrl {
 
 			this.products = products.data;
 
+			// Tells the pager directive to render
 			this.data_loaded = true;
 
 			this.loadImages();

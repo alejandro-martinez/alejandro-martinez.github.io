@@ -33,7 +33,7 @@ export class PagerDtv {
     		$scope.pagedItems = function() {
 				var tmp_array = [];
 				if ( $scope.currentPage <= $scope.totalPages ) {
-					for (let i= $scope.currentPage; i < $scope.currentPage + $scope.pagination.itemsPerPage; i++) {
+					for (let i= $scope.currentPage; i < ($scope.currentPage + $scope.pagination.visiblePages); i++) {
 						tmp_array.push( i );
 					}
 				}
@@ -51,7 +51,6 @@ export class PagerDtv {
     	}
 
     	$scope.setPage = function( _page ) {
-    		console.log("NEW pageee",_page)
     		$scope.currentPage = _page;
     	}        
     }
