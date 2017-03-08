@@ -265,6 +265,15 @@ class ProductsCtrl {
 			}
 		});
 	}
+	search() {
+
+		if (this.filter_term.length > 2) {
+			this.productsSvc.search(this.category_id, this.filter_term).then(products => {
+				this.products = products.data;
+				this.loadImages();
+			});
+		}
+	}
 	loadImages() {
 		var ids = [];
 		this.products.results.map(p => {
@@ -272,7 +281,7 @@ class ProductsCtrl {
 		});
 
 		this.productsSvc.getProductPictures(ids.join(",")).then(products => {
-			console.log(products.data);
+
 			// Add images to products on the page
 			this.products.results.map(p => {
 				let product_with_image = products.data.filter(o => {
@@ -350,6 +359,9 @@ class ProductsSvc {
 	constructor($http, Config) {
 		this.http = $http;
 		this.config = Config;
+	}
+	search(category_id, filter_term) {
+		return this.http.get(this.config.apiURL + "search?category=" + category_id + "&q=" + filter_term);
 	}
 	getByCategory(category_id, queryParams) {
 		return this.http.get(this.config.apiURL + "search?category=" + category_id + "&limit=" + queryParams.itemsPerPage + "&offset=" + queryParams.offset);

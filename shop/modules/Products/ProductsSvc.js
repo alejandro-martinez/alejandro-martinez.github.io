@@ -3,9 +3,13 @@ export class ProductsSvc {
 		this.http = $http;
 		this.config = Config;
 	}
+	search( category_id, filter_term ) {
+		return this.http.get( this.config.apiURL + "search?category=" + category_id
+												 + "&q=" + filter_term);
+	}
 	getByCategory( category_id, queryParams ) {
 		return this.http.get( this.config.apiURL 
-			+  "search?category=" +  category_id 
+			+  "search?category=" + category_id 
 			+  "&limit=" + queryParams.itemsPerPage
 			+  "&offset=" + queryParams.offset );
 	}

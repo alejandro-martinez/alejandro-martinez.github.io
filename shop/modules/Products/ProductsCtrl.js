@@ -24,7 +24,16 @@ export class ProductsCtrl {
 			if (this.pagination.offset > 0) {
 				this.getByCategory();
 			}
-		})
+		});
+	}
+	search() {
+
+		if ( this.filter_term.length > 2) {
+			this.productsSvc.search( this.category_id, this.filter_term).then((products) => {
+				this.products = products.data;
+				this.loadImages();
+			});	
+		}
 	}
 	loadImages() {
 		var ids = [];
@@ -33,7 +42,7 @@ export class ProductsCtrl {
 		});
 
 		this.productsSvc.getProductPictures(ids.join(",")).then(( products ) => {
-    		console.log(products.data)
+    		
     		// Add images to products on the page
     		this.products.results.map((p) => {
     			let product_with_image = products.data.filter((o) => {
