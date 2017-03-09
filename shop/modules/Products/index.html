@@ -4,14 +4,14 @@
     <div class="col-xs-5 pull-right">
         <div class="input-group pull-right">
           <input type="text" ng-model="$ctrl.filter_term" 
-                 class="form-control" placeholder="Busca cualquier cosa ...">
+                 class="form-control" placeholder="Busca cualquier cosa...">
           <span class="input-group-btn">
             <button class="btn btn-default" ng-click="$ctrl.search()" type="button">Buscar</button>
           </span>
         </div>
     </div>
 
-    <!-- Available Filters --> 
+    <!-- Available Sorts --> 
     <div class="col-xs-3 pull-right">
       <div class="dropdown pull-right">
         <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Ordenar
@@ -26,11 +26,15 @@
     </div>
 
 </div>
+
+<!-- Products List -->
 <div class="row">
   <div class="col-sm-4 col-lg-4 col-md-4" ng-repeat="product in $ctrl.products.results">
       <product-detail></product-detail>
   </div>
 </div>
+
+<!-- Pagination -->
 <div class="row">
   <pager 	ng-if="$ctrl.data_loaded" 
   		data="$ctrl.products"
