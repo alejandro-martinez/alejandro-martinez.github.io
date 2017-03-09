@@ -30,11 +30,12 @@ export class ProductsCtrl {
 	search() {
 
 		if ( this.filter_term.length > 2) {
-			this.productsSvc.search( this.category_id, this.filter_term).then((products) => {
-				this.products = products.data;
-				this.loadImages();
-			});	
+			this.productsSvc.search( this.filter_term ).then( this.refreshProducts );	
 		}
+	}
+	// Sort products 
+	sortBy( sort_id ) {
+		this.productsSvc.sortBy( sort_id ).then( this.refreshProducts );
 	}
 	// Iterates over the products and request ther images
 	loadImages() {
@@ -56,26 +57,26 @@ export class ProductsCtrl {
     		})
     	});
 	}
+	refreshProducts( products ) {
+
+		// Add random rating and reviews values
+		products.data.results.map(( p ) => {
+			p.reviews = Math.floor(Math.random() * 50) + 1  
+			p.rating = new Array( Math.floor(Math.random() * 5) + 1 );	
+		});
+		
+		this.products = products.data;
+
+		// Tells the pager directive to render
+		this.data_loaded = true;
+	
+		this.loadImages();
+	}
 	// Brings product's filtered by category from MercadoLibre Api
 	getByCategory() {
-		
-		this.productsSvc.getByCategory( this.filter_category, this.pagination ).then( ( products ) => {
-			
-			console.log(products.data)
-			
-			// Add random rating and reviews values
-			products.data.results.map(( p ) => {
-				p.reviews = Math.floor(Math.random() * 50) + 1  
-    			p.rating = new Array( Math.floor(Math.random() * 5) + 1 );	
-			});
-    		
-    		this.products = products.data;
-
-    		// Tells the pager directive to render
-			this.data_loaded = true;
-		
-			this.loadImages();
-		});
+		this.productsSvc.setCategory( this.filter_category )
+						.getByCategory( this.pagination )
+						.then( this.refreshProducts );
 	}
 
 }

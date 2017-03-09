@@ -267,11 +267,15 @@ class ProductsCtrl {
 	search() {
 
 		if (this.filter_term.length > 2) {
-			this.productsSvc.search(this.category_id, this.filter_term).then(products => {
+			this.productsSvc.search(this.filter_term).then(products => {
 				this.products = products.data;
 				this.loadImages();
 			});
 		}
+	}
+	// Sort products 
+	sortBy(sort_id) {
+		this.productsSvc.sortBy(sort_id);
 	}
 	// Iterates over the products and request ther images
 	loadImages() {
@@ -296,9 +300,7 @@ class ProductsCtrl {
 	// Brings product's filtered by category from MercadoLibre Api
 	getByCategory() {
 
-		this.productsSvc.getByCategory(this.filter_category, this.pagination).then(products => {
-
-			console.log(products.data);
+		var onProducts = products => {
 
 			// Add random rating and reviews values
 			products.data.results.map(p => {
@@ -312,7 +314,9 @@ class ProductsCtrl {
 			this.data_loaded = true;
 
 			this.loadImages();
-		});
+		};
+
+		this.productsSvc.setCategory(this.filter_category).getByCategory(this.pagination).then(onProducts);
 	}
 
 }
@@ -363,12 +367,21 @@ class ProductsSvc {
 	constructor($http, Config) {
 		this.http = $http;
 		this.config = Config;
+		this.category = 0;
 	}
-	search(category_id, filter_term) {
-		return this.http.get(this.config.apiURL + "search?category=" + category_id + "&q=" + filter_term);
+	setCategory(category_id) {
+		this.category = category_id;
+
+		return this;
 	}
-	getByCategory(category_id, queryParams) {
-		return this.http.get(this.config.apiURL + "search?category=" + category_id + "&limit=" + queryParams.itemsPerPage + "&offset=" + queryParams.offset);
+	search(filter_term) {
+		return this.http.get(this.config.apiURL + "search?category=" + this.category + "&q=" + filter_term);
+	}
+	sortBy(sort_id) {
+		return this.http.get(this.config.apiURL + "search?category=" + this.category + "&sort=" + sort_id);
+	}
+	getByCategory(queryParams) {
+		return this.http.get(this.config.apiURL + "search?category=" + this.category + "&limit=" + queryParams.itemsPerPage + "&offset=" + queryParams.offset);
 	}
 	getProductPictures(product_ids) {
 		return this.http.get(this.config.apiBaseURL + "items?ids=" + product_ids);

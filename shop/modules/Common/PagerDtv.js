@@ -54,8 +54,4 @@ export class PagerDtv {
     		$scope.currentPage = _page;
     	}        
     }
-
-    link( scope, element, attrs ) {
-    	
-    }
 }
