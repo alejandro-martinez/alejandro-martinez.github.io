@@ -32,11 +32,15 @@
   <div class="col-sm-4 col-lg-4 col-md-4" ng-repeat="product in $ctrl.products.results">
       <product-detail></product-detail>
   </div>
+  <div class="text-center" ng-if="$ctrl.data_loaded" ng-hide="$ctrl.products.results.length">
+      <h2>No se encontraron productos!</h2>
+  </div>
 </div>
 
 <!-- Pagination -->
 <div class="row">
-  <pager 	ng-if="$ctrl.data_loaded" 
+  <pager ng-if="$ctrl.data_loaded" 
+        ng-show="$ctrl.products.results.length"
   		data="$ctrl.products"
   		pagination="$ctrl.pagination">
   </pager>
