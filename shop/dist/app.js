@@ -115,7 +115,7 @@ class CategoriesCtrl {
 
 		// Brings product's categories from MercadoLibre Api
 		this.categoriesSvc.getAll().then(categories => {
-			console.log("Categories");
+			console.log("Categoriessssssssss");
 			this.categories = categories.data;
 			$rootScope.$emit("CATEGORIES_LOADED", categories.data);
 		});
@@ -182,6 +182,7 @@ class PagerDtv {
       $scope.pagination.offset = $scope.data.results.length;
       $scope.totalPages = $scope.data.paging.total / $scope.pagination.itemsPerPage;
 
+      // Returns the array of available pages to navigate
       $scope.pagedItems = function () {
         var tmp_array = [];
         if ($scope.currentPage <= $scope.totalPages) {
@@ -205,8 +206,6 @@ class PagerDtv {
       $scope.currentPage = _page;
     };
   }
-
-  link(scope, element, attrs) {}
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = PagerDtv;
 
@@ -242,6 +241,7 @@ class ProductsCtrl {
 		this.data_loaded = false;
 		this.filter_category = 0;
 
+		// Params for the pager directive
 		this.pagination = {
 			currentPage: 1,
 			offset: 0,
@@ -249,35 +249,33 @@ class ProductsCtrl {
 			visiblePages: 6
 		};
 
+		// When the users selects a category
 		if (angular.isDefined($routeParams.category_id)) {
-			this.filter_category = $routeParams.category_id;
-			this.getByCategory();
+			this.getByCategory($routeParams.category_id);
 		}
 
+		// Load products of the first category
 		$rootScope.$on("CATEGORIES_LOADED", (ev, categories) => {
-			this.filter_category = categories[0].id;
 			this.getByCategory(categories[0].id);
 		});
 
-		// On pagination event
+		// On paging event
 		$rootScope.$on("PAGE_CHANGED", (ev, data) => {
 			if (this.pagination.offset > 0) this.getByCategory();
 		});
 	}
+	// Searchs a product on the current category
 	search() {
 
 		if (this.filter_term.length > 2) {
-			this.productsSvc.search(this.filter_term).then(products => {
-				this.products = products.data;
-				this.loadImages();
-			});
+			this.productsSvc.search(this.filter_term).then(data => this.refreshProducts(data));
 		}
 	}
 	// Sort products 
 	sortBy(sort_id) {
-		this.productsSvc.sortBy(sort_id);
+		this.productsSvc.sortBy(sort_id).then(data => this.refreshProducts(data));
 	}
-	// Iterates over the products and request ther images
+	// Iterates over the products and request ther images progressively
 	loadImages() {
 
 		var ids = [];
@@ -292,31 +290,30 @@ class ProductsCtrl {
 				let product_with_image = products.data.filter(o => {
 					return o.id === p.id;
 				});
-
-				p.image = product_with_image[0].pictures[0].url;
+				if (product_with_image && product_with_image[0].pictures.length) {
+					p.image = product_with_image[0].pictures[0].secure_url;
+				}
 			});
 		});
 	}
+	refreshProducts(products) {
+
+		// Add random rating and reviews values
+		products.data.results.map(p => {
+			p.reviews = Math.floor(Math.random() * 50) + 1;
+			p.rating = new Array(Math.floor(Math.random() * 5) + 1);
+		});
+
+		this.products = products.data;
+
+		// Tells the pager directive to show itself
+		this.data_loaded = true;
+
+		this.loadImages();
+	}
 	// Brings product's filtered by category from MercadoLibre Api
-	getByCategory() {
-
-		var onProducts = products => {
-
-			// Add random rating and reviews values
-			products.data.results.map(p => {
-				p.reviews = Math.floor(Math.random() * 50) + 1;
-				p.rating = new Array(Math.floor(Math.random() * 5) + 1);
-			});
-
-			this.products = products.data;
-
-			// Tells the pager directive to render
-			this.data_loaded = true;
-
-			this.loadImages();
-		};
-
-		this.productsSvc.setCategory(this.filter_category).getByCategory(this.pagination).then(onProducts);
+	getByCategory(category) {
+		this.productsSvc.setCategory(category).getByCategory(this.pagination).then(data => this.refreshProducts(data));
 	}
 
 }
@@ -338,20 +335,8 @@ class ProductsDtv {
         this.templateUrl = 'modules/Products/product_detail.html';
         this.scope = {};
     }
-
-    controller($scope, ProductsSvc) {
-        $scope.productsSvc = ProductsSvc;
-    }
-
     link(scope, element, attrs) {
         scope.product = scope.$parent.product;
-        /*
-        scope.productsSvc.getProductPictures( scope.$parent.product.id ).then(( product ) => {
-        	// Add main image 
-        	scope.$parent.product.image = product.data.pictures[0].secure_url;
-        	scope.product = scope.$parent.product;
-        		
-        })*/
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = ProductsDtv;
@@ -370,7 +355,8 @@ class ProductsSvc {
 		this.category = 0;
 	}
 	setCategory(category_id) {
-		this.category = category_id;
+
+		if (category_id) this.category = category_id;
 
 		return this;
 	}

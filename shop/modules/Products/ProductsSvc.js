@@ -5,7 +5,9 @@ export class ProductsSvc {
 		this.category = 0;
 	}
 	setCategory( category_id ) {
-		this.category = category_id;
+		
+		if ( category_id )
+			this.category = category_id;
 
 		return this;
 	}

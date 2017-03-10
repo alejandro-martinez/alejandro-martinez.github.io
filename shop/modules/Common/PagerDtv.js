@@ -30,6 +30,7 @@ export class PagerDtv {
     		$scope.pagination.offset = $scope.data.results.length;
     		$scope.totalPages = $scope.data.paging.total / $scope.pagination.itemsPerPage;
 
+    		// Returns the array of available pages to navigate
     		$scope.pagedItems = function() {
 				var tmp_array = [];
 				if ( $scope.currentPage <= $scope.totalPages ) {
